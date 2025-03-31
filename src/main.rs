@@ -1,11 +1,22 @@
 mod gol;
-use gol::{GameOfLife, CellState};
+
+use gol::{CellState, GameOfLife};
 
 fn main() {
-    let mut gol: GameOfLife<8, 8> = GameOfLife::new();
-    gol[(3, 3)] = CellState::Alive;
+    const D: CellState = CellState::Dead;
+    const A: CellState = CellState::Alive;
+
+    let mut gol: GameOfLife<5, 5> = GameOfLife::from_board([
+        [D, D, D, D, D],
+        [D, D, D, D, D],
+        [D, A, A, A, D],
+        [D, D, D, D, D],
+        [D, D, D, D, D],
+    ]);
+    let _default_gol: GameOfLife<5, 5> = GameOfLife::new();
     gol.pretty_print();
-    println!("{:?}", gol.count_neighbours_all());
+    gol.update();
+    gol.pretty_print();
     gol.update();
     gol.pretty_print();
 }
