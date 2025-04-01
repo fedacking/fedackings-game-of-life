@@ -16,15 +16,10 @@ impl CellState {
 }
 
 fn update_cell(state: CellState, neighbours: usize) -> CellState {
-    match state {
-        CellState::Alive => match neighbours {
-            2..3 => CellState::Alive,
-            _ => CellState::Dead,
-        },
-        CellState::Dead => match neighbours {
-            3 => CellState::Alive,
-            _ => CellState::Dead,
-        },
+    match (state, neighbours) {
+        (CellState::Alive, 2..3) => CellState::Alive,
+        (CellState::Dead, 3) => CellState::Alive,
+        _ => CellState::Dead,
     }
 }
 

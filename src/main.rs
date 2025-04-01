@@ -15,8 +15,10 @@ fn main() {
     ]);
     let _default_gol: GameOfLife<5, 5> = GameOfLife::new();
     gol.pretty_print();
+    println!("");
     gol.update();
     gol.pretty_print();
+    println!("");
     gol.update();
     gol.pretty_print();
 }
