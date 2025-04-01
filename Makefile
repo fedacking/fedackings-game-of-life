@@ -1,6 +1,9 @@
 run:
 	cargo run
 
+build:
+	cargo build
+
 format:
 	cargo fmt
 
