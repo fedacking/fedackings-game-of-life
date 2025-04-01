@@ -17,7 +17,7 @@ impl CellState {
 
 fn update_cell(state: CellState, neighbours: usize) -> CellState {
     match (state, neighbours) {
-        (CellState::Alive, 2..3) => CellState::Alive,
+        (CellState::Alive, 2..=3) => CellState::Alive,
         (CellState::Dead, 3) => CellState::Alive,
         _ => CellState::Dead,
     }
@@ -134,7 +134,17 @@ mod tests {
 
     #[test]
     fn test_overcrowding() {
-        let default_gol: GameOfLife<6, 6> = GameOfLife::new();
+        let default_gol = GameOfLife::new();
+        let middle_gol: GameOfLife<6, 6> = GameOfLife {
+            board: [
+                [A, D, D, D, D, A],
+                [D, D, D, D, D, D],
+                [D, D, D, D, D, D],
+                [D, D, D, D, D, D],
+                [D, D, D, D, D, D],
+                [A, D, D, D, D, A],
+            ],
+        };
         let start_gol: GameOfLife<6, 6> = GameOfLife {
             board: [
                 [A, A, A, A, A, A],
@@ -148,8 +158,11 @@ mod tests {
         let mut update_gol: GameOfLife<6, 6> = start_gol;
         update_gol.update();
 
-        assert_eq!(default_gol, update_gol);
+        assert_eq!(middle_gol, update_gol);
         assert_ne!(start_gol, update_gol);
+        update_gol.update();
+
+        assert_eq!(default_gol, update_gol);
     }
 
     #[test]
@@ -167,5 +180,21 @@ mod tests {
         assert_eq!(a_gol, update_gol);
         update_gol.update();
         assert_eq!(b_gol, update_gol);
+    }
+
+    #[test]
+    fn test_persist() {
+        let default_gol: GameOfLife<4, 4> = GameOfLife {
+            board: [[D, D, D, D], [D, A, A, D], [D, A, A, D], [D, D, D, D]],
+        };
+        let mut update_gol: GameOfLife<4, 4> = default_gol;
+
+        assert_eq!(default_gol, update_gol);
+        update_gol.update();
+        assert_eq!(default_gol, update_gol);
+        update_gol.update();
+        assert_eq!(default_gol, update_gol);
+        update_gol.update();
+        assert_eq!(default_gol, update_gol);
     }
 }
