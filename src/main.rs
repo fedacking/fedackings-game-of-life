@@ -9,6 +9,11 @@ use gol::{CellState, GameOfLife};
 const CELL_SIZE: f32 = 15.0;
 const UPS: f32 = 2.0;
 
+// Given a CellState and a series of coordinates in the screen
+// x, y (with the center on the top left going right bottom)
+// Draws a rectangle with black borders and filled with 
+// green for alive cells and gray for dead cells.
+// The size of the rectangle is given by CELL_SIZE
 fn draw_cell(state: CellState, x: f32, y: f32) {
     let color = match state {
         CellState::Alive => GREEN,
@@ -21,6 +26,9 @@ fn draw_cell(state: CellState, x: f32, y: f32) {
     draw_line(x, y, x, y + CELL_SIZE, 2.0, BLACK);
 }
 
+
+// Traverses the board to draw it. To see the details of how the board is drawn,
+// see function draw_cell
 fn draw_board<const WIDTH: usize, const HEIGHT: usize>(gol: GameOfLife<WIDTH, HEIGHT>) {
     for x in 0..WIDTH {
         for y in 0..HEIGHT {

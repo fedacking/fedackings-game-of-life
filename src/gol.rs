@@ -17,8 +17,7 @@ impl CellState {
 
 fn update_cell(state: CellState, neighbours: usize) -> CellState {
     match (state, neighbours) {
-        (CellState::Alive, 2..=3) => CellState::Alive,
-        (CellState::Dead, 3) => CellState::Alive,
+        (CellState::Dead, 3) | (CellState::Alive, 2 | 3) => CellState::Alive,
         _ => CellState::Dead,
     }
 }
@@ -53,10 +52,12 @@ impl<const WIDTH: usize, const HEIGHT: usize> GameOfLife<WIDTH, HEIGHT> {
         }
     }
 
+    // Allows you to start a game of life with a preset board
     pub fn from_board(board: [[CellState; WIDTH]; HEIGHT]) -> Self {
         GameOfLife { board }
     }
 
+    // Prints the board to out in proper lines
     pub fn pretty_print(&self) {
         for board in self.board {
             println!("{:?}", board.map(CellState::pretty_print));
@@ -92,6 +93,7 @@ impl<const WIDTH: usize, const HEIGHT: usize> GameOfLife<WIDTH, HEIGHT> {
             .count()
     }
 
+    // This method updates the whole game of life to the next iteration
     pub fn update(&mut self) {
         let mut new_board = [[CellState::Dead; WIDTH]; HEIGHT];
         for (y, column) in self.board.iter().enumerate() {
@@ -124,6 +126,7 @@ mod tests {
     const A: CellState = CellState::Alive;
 
     #[test]
+    // Verifies that the empty pattern should remove patterns
     fn test_empty() {
         let default_gol: GameOfLife<6, 6> = GameOfLife::new();
         let mut update_gol: GameOfLife<6, 6> = GameOfLife::new();
@@ -133,6 +136,7 @@ mod tests {
     }
 
     #[test]
+    // Tests a pattern full of Alive cells. Only the corners should survive
     fn test_overcrowding() {
         let default_gol = GameOfLife::new();
         let middle_gol: GameOfLife<6, 6> = GameOfLife {
@@ -166,6 +170,10 @@ mod tests {
     }
 
     #[test]
+    // Tests the cross repeating pattern. Each iteration returns to the previous state
+    // DAD    DDD
+    // DAD -> AAA
+    // DDD    DDD
     fn test_repeat() {
         let a_gol: GameOfLife<3, 3> = GameOfLife {
             board: [[D, A, D], [D, A, D], [D, A, D]],
@@ -183,6 +191,11 @@ mod tests {
     }
 
     #[test]
+    // Tests the cube persistent pattern. It never changes
+    // DDDD
+    // DAAD
+    // DAAD
+    // DDDD
     fn test_persist() {
         let default_gol: GameOfLife<4, 4> = GameOfLife {
             board: [[D, D, D, D], [D, A, A, D], [D, A, A, D], [D, D, D, D]],
@@ -196,5 +209,21 @@ mod tests {
         assert_eq!(default_gol, update_gol);
         update_gol.update();
         assert_eq!(default_gol, update_gol);
+    }
+
+    #[test]
+    // Tests the transitions from cells
+    fn test_transitions() {
+        // Testing initial state D
+        assert_eq!(D, update_cell(D, 1));
+        assert_eq!(D, update_cell(D, 2));
+        assert_eq!(A, update_cell(D, 3));
+        assert_eq!(D, update_cell(D, 4));
+
+        // Testing initial state A
+        assert_eq!(D, update_cell(A, 1));
+        assert_eq!(A, update_cell(A, 2));
+        assert_eq!(A, update_cell(A, 3));
+        assert_eq!(D, update_cell(A, 4));
     }
 }
