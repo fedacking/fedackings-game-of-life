@@ -11,7 +11,7 @@ const UPS: f32 = 2.0;
 
 // Given a CellState and a series of coordinates in the screen
 // x, y (with the center on the top left going right bottom)
-// Draws a rectangle with black borders and filled with 
+// Draws a rectangle with black borders and filled with
 // green for alive cells and gray for dead cells.
 // The size of the rectangle is given by CELL_SIZE
 fn draw_cell(state: CellState, x: f32, y: f32) {
@@ -25,7 +25,6 @@ fn draw_cell(state: CellState, x: f32, y: f32) {
     draw_line(x, y + CELL_SIZE, x + CELL_SIZE, y + CELL_SIZE, 2.0, BLACK);
     draw_line(x, y, x, y + CELL_SIZE, 2.0, BLACK);
 }
-
 
 // Traverses the board to draw it. To see the details of how the board is drawn,
 // see function draw_cell

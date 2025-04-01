@@ -6,15 +6,6 @@ pub enum CellState {
     Dead,
 }
 
-impl CellState {
-    fn pretty_print(self) -> char {
-        match self {
-            CellState::Alive => 'A',
-            CellState::Dead => 'D',
-        }
-    }
-}
-
 fn update_cell(state: CellState, neighbours: usize) -> CellState {
     match (state, neighbours) {
         (CellState::Dead, 3) | (CellState::Alive, 2 | 3) => CellState::Alive,
@@ -55,13 +46,6 @@ impl<const WIDTH: usize, const HEIGHT: usize> GameOfLife<WIDTH, HEIGHT> {
     // Allows you to start a game of life with a preset board
     pub fn from_board(board: [[CellState; WIDTH]; HEIGHT]) -> Self {
         GameOfLife { board }
-    }
-
-    // Prints the board to out in proper lines
-    pub fn pretty_print(&self) {
-        for board in self.board {
-            println!("{:?}", board.map(CellState::pretty_print));
-        }
     }
 
     fn y_permut(&self, x: usize, y: usize) -> Vec<(usize, usize)> {
