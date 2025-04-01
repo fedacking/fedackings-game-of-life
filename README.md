@@ -2,7 +2,9 @@
 
 An implementation of rust implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) with a GUI to observe it run.
 
-## Game of Life Explanation
+## Game of Life
+
+### Explanation
 
 From [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life):
 
@@ -17,6 +19,12 @@ From [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life):
 >        Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 >    The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed—births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick (in other words, each generation is a pure function of the preceding one). The rules continue to be applied repeatedly to create further generations.
+
+### Constraints
+
+Because we have limited memory, our game of life is limited to the a square of size defined at compile time in our main.rs source file. 
+
+The Game of life comes with a graphical user interface that updates at the rate of 2 times per second. This and the size of the cells on screen can be changed through consts in main.rs (respectively UPS and CELL_SIZE).
 
 ## Dependencies
 
