@@ -7,7 +7,7 @@ use gol::{CellState, GameOfLife};
 
 /// How big is the cell displayed in the screen
 const CELL_SIZE: f32 = 15.0;
-/// Many updates to the board happen per second
+/// How many updates to the board happen per second
 /// Independent from framerate
 const UPS: f32 = 2.0;
 
