@@ -1,5 +1,6 @@
 use std::ops::{Index, IndexMut};
 
+/// Enum representing the state of the cells, alive and dead.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum CellState {
     Alive,
@@ -13,6 +14,12 @@ fn update_cell(state: CellState, neighbours: usize) -> CellState {
     }
 }
 
+/// The GameOfLife struct is the internal representation of the game
+/// of life. It has a single element, board: a 2d array of CellStates
+/// that captures the internal state of the game. 
+/// WIDTH and HEIGHT represent how many columns and rows the game has.
+/// The structure can be read through an index with a tuple like so:
+/// (column, row).
 #[derive(Debug, Clone, Copy)]
 pub struct GameOfLife<const WIDTH: usize, const HEIGHT: usize> {
     board: [[CellState; WIDTH]; HEIGHT],
@@ -21,6 +28,8 @@ pub struct GameOfLife<const WIDTH: usize, const HEIGHT: usize> {
 impl<const WIDTH: usize, const HEIGHT: usize> Index<(usize, usize)> for GameOfLife<WIDTH, HEIGHT> {
     type Output = CellState;
 
+    /// Allows you to see the status of a given cell. The first number in the index
+    /// is the column index and the second the row index. This returns a reference
     fn index(&self, index: (usize, usize)) -> &CellState {
         let (x, y) = index;
         &self.board[y][x]
@@ -30,6 +39,8 @@ impl<const WIDTH: usize, const HEIGHT: usize> Index<(usize, usize)> for GameOfLi
 impl<const WIDTH: usize, const HEIGHT: usize> IndexMut<(usize, usize)>
     for GameOfLife<WIDTH, HEIGHT>
 {
+    /// Allows you to see the status of a given cell. The first number in the index
+    /// is the column index and the second the row index. This returns a mutable reference
     fn index_mut(&mut self, index: (usize, usize)) -> &mut CellState {
         let (x, y) = index;
         &mut self.board[y][x]
@@ -43,7 +54,7 @@ impl<const WIDTH: usize, const HEIGHT: usize> GameOfLife<WIDTH, HEIGHT> {
         }
     }
 
-    // Allows you to start a game of life with a preset board
+    /// Allows you to start a game of life with a preset board
     pub fn from_board(board: [[CellState; WIDTH]; HEIGHT]) -> Self {
         GameOfLife { board }
     }
@@ -59,6 +70,8 @@ impl<const WIDTH: usize, const HEIGHT: usize> GameOfLife<WIDTH, HEIGHT> {
         indexes
     }
 
+    /// Allows you to see how many neighbours a cell has
+    /// x is the column index and y is the row index
     pub fn count_neighbours(&self, x: usize, y: usize) -> usize {
         let mut indexes: Vec<(usize, usize)> = vec![];
 
