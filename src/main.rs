@@ -59,7 +59,7 @@ async fn main() {
     //    [D, D, D, D, D, D, D, D, D, D],
     //    [D, D, D, D, D, D, D, D, D, D],
     //    [D, D, D, D, D, D, D, D, D, D],
-    // ]); 
+    // ]);
     // ```
     let mut gol: GameOfLife<50, 50> = GameOfLife::new();
     // Left Block

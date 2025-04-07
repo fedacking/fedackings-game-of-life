@@ -16,7 +16,7 @@ fn update_cell(state: CellState, neighbours: usize) -> CellState {
 
 /// The GameOfLife struct is the internal representation of the game
 /// of life. It has a single element, board: a 2d array of CellStates
-/// that captures the internal state of the game. 
+/// that captures the internal state of the game.
 /// WIDTH and HEIGHT represent how many columns and rows the game has.
 /// The structure can be read through an index with a tuple like so:
 /// (column, row).
