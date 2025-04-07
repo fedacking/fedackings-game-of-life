@@ -110,7 +110,7 @@ mod tests {
     const A: CellState = CellState::Alive;
 
     #[test]
-    // Verifies that the empty pattern should remove patterns
+    // Verifies that the empty pattern does not change the cell states of the board
     fn test_empty() {
         let default_gol: GameOfLife<6, 6> = GameOfLife::new();
         let mut update_gol: GameOfLife<6, 6> = GameOfLife::new();

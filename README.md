@@ -22,7 +22,9 @@ From [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life):
 
 ### Constraints
 
-Because we have limited memory, our game of life is limited to the a square of size defined at compile time in our main.rs source file. 
+This implementation stores the Game of Life universe completly in memory. Dute to physical limitation on ram usage, our game of life is limited to a square of size defined at compile time in our main.rs source file. 
+
+The initial state is defined at compile time in `main.rs`. To change it, it's necessary to recompile the crate.
 
 The Game of life comes with a graphical user interface that updates at the rate of 2 times per second. This and the size of the cells on screen can be changed through consts in main.rs (respectively UPS and CELL_SIZE).
 
